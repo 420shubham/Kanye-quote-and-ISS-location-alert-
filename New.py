@@ -10,6 +10,8 @@ MY_EMAIL ="shubhamb42069@gmail.com"
 password ="pmif sdeb bkgi pzir"
 running =True
 
+
+#this funcrion checks if the iss longitude and latitude are close to the users requests.get is used to get the latitude and longitude of the ISS 
 def is_it():
     response = requests.get(url="http://api.open-notify.org/iss-now.json")
     response.raise_for_status()
@@ -25,6 +27,8 @@ def is_it():
     else:
         return False
 
+
+# checks if the ISS is visible in the sky which is possible after and before sunset sunrise-sunset API is used with parameters to find the sunrise and sunset in the users location and checks if its dark outside
 def is_time():
     time_now = datetime.now().hour
 
@@ -45,7 +49,8 @@ def is_time():
 
     if time_now >= sunset or time_now <= sunrise:
         return True
-
+    
+#if all the conditions are met then a email is sent to the users usinf smtplib library if the conditions are not met then it is checked every 60sec using time module and time.sleep() function, the loop ends once the ISS is close enough to be observed
 while running:
     time.sleep(60)
     if is_it() and is_time():
